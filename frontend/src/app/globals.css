@@ -12,6 +12,10 @@
   --ui-accent-soft: rgb(180 83 9 / 0.1);
   --ui-accent-border: rgb(180 83 9 / 0.38);
   --motion-glow: rgb(180 83 9 / 0.18);
+  --note-highlight-bg: #FDE68A;
+  --note-highlight-fg: #422006;
+  --note-selection-bg: #FDE68A;
+  --note-selection-fg: #422006;
 }
 
 body {
@@ -29,6 +33,10 @@ html.dark {
   --ui-accent-soft: rgb(251 191 36 / 0.12);
   --ui-accent-border: rgb(251 191 36 / 0.45);
   --motion-glow: rgb(251 191 36 / 0.2);
+  --note-highlight-bg: #166534;
+  --note-highlight-fg: #F0FDF4;
+  --note-selection-bg: #166534;
+  --note-selection-fg: #F0FDF4;
 }
 
 html.dark body {
@@ -546,6 +554,10 @@ textarea {
   pointer-events: none;
 }
 
+html.dark .orbital-note-editor:empty::before {
+  color: #6B7280;
+}
+
 .orbital-note-editor h3,
 .orbital-note-content h3 {
   margin: .4rem 0;
@@ -593,10 +605,21 @@ html.dark .orbital-note-content pre {
 }
 
 .orbital-note-editor mark,
-.orbital-note-content mark {
-  padding: 0 .1rem;
-  border-radius: 2px;
-  background: #fef08a;
+.orbital-note-content mark,
+.orbital-note-editor [style*="background"],
+.orbital-note-content [style*="background"] {
+  padding: 0.1rem 0.25rem;
+  border-radius: 3px;
+  background-color: var(--note-highlight-bg) !important;
+  color: var(--note-highlight-fg) !important;
+}
+
+.orbital-note-editor::selection,
+.orbital-note-editor *::selection,
+.orbital-note-content::selection,
+.orbital-note-content *::selection {
+  background-color: var(--note-selection-bg) !important;
+  color: var(--note-selection-fg) !important;
 }
 
 .orbital-gallery-enter {
