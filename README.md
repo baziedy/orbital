@@ -38,6 +38,18 @@ The app queries NASA/IPAC IRSA for live SPHEREx archive records and provides cur
 - **Light and dark themes**: The site-wide toggle also applies to the Research and Sources pages.
 - **Editorial Astrometric Interface**: Built with a clean, high-contrast scientific aesthetic (`#F7F7F5` warm paper canvas, `#111111` editorial typography, Inter, DM Serif Display, and JetBrains Mono) with full responsive support across mobile, tablet, and desktop viewports.
 
+### Application Screenshots
+
+| **Discover & Archive Briefing** | **Sky Explorer & Timeline** |
+| :---: | :---: |
+| <img src="docs/images/Screenshot%20From%202026-11-15%2018-25-42.png" alt="Discover Page: Mission briefing and interactive archive preview" width="100%" /> | <img src="docs/images/Screenshot%20From%202026-11-15%2018-25-59.png" alt="Sky Explorer: Multi-epoch observation timeline, telemetry, and FITS viewer" width="100%" /> |
+| *Discover landing page with mission specifications and interactive archive preview* | *Sky Explorer workspace featuring multi-epoch cadence timeline and observation telemetry* |
+
+| **Differential Studio & Image Comparison** | **My Research Citizen Science Bench** |
+| :---: | :---: |
+| <img src="docs/images/Screenshot%20From%202026-11-15%2018-26-14.png" alt="Differential Studio: Split slider comparison and display palettes" width="100%" /> | <img src="docs/images/Screenshot%20From%202026-11-15%2018-26-21.png" alt="My Research: Browser-local studies and observation dossier builder" width="100%" /> |
+| *Differential Studio with split-view comparison slider, difference mode, and pixel metrics* | *My Research bench for tracking multi-epoch studies, custom notes, and data attachments* |
+
 ---
 
 ## 2. Practice Targets
