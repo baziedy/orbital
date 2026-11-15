@@ -1,0 +1,105 @@
+ORBITAL — NASA SPACE APPS PROJECT SUBMISSION DRAFT
+Prepared: 2026-11-15
+
+PROJECT NAME
+ORBITAL — SPHEREx Archive Explorer
+
+SUMMARY (paste into Summary; 50–200 words)
+ORBITAL is an independent, browser-based practice workspace for exploring released SPHEREx archive products and learning how to inspect astronomical images. Users can search NASA/IPAC IRSA records, preview available FITS products, browse curated Digitized Sky Survey reference fields, compare image views, and keep browser-local research notes. Educational tools illustrate parallax and orbital assumptions, while source labels explain what each image or calculation can and cannot establish. The project addresses the gap between finding scientific data and interpreting it responsibly: it brings discovery, visual review, and provenance into one approachable workflow. ORBITAL is important as a learning and exploration aid, not as a scientific detection pipeline. Curated reference images are not SPHEREx observations; comparison is display-level, and illustrative model outputs are not measurements or discoveries.
+
+PROJECT LINKS
+Project Demonstration URL (required; not yet public):
+ACTION REQUIRED: Upload ORBITAL_Project_Demo_7_Slides.pdf to a public host (Google Drive, GitHub, OneDrive, Dropbox, etc.), enable access for anyone with the link, and replace this line with the complete public URL. Do not submit the local file path as the demo link. The PDF is exactly 7 slides.
+
+Project URL (required; no verified public URL available):
+The configured repository URL is https://github.com/Abdullah-Al-Maruf67/Orbital but it returned 404 during public-access verification on 2026-11-15. It may be private or unavailable. Make the repository public or publish the website, then paste and test the full public URL here.
+
+PROJECT INFORMATION
+Project Details (paste into Project Details)
+ORBITAL is an independent educational prototype inspired by the Planet X and SPHEREx challenge context. Its Explore workspace searches NASA/IPAC IRSA for released SPHEREx records and available FITS products, and it also presents curated STScI Digitized Sky Survey reference images for selected practice targets. Users can inspect metadata and image previews, compare views with slider/blink/side-by-side modes, browse sky layers through CDS Aladin Lite, and maintain browser-local research notes with text export. Additional tools demonstrate idealized parallax/orbit relationships, coordinate offsets, image marking, and illustrative spectral sonification. The interface uses Next.js, React, TypeScript, Tailwind/Sass, and Recharts; the service layer uses FastAPI, Python, Astropy, and Pillow. The creative approach combines archive access with a guided visual-review workflow and explicit provenance labels. Key constraints are built into the interpretation: the curated DSS dates are illustrative, comparisons are not WCS-registered or calibrated, generated spectral curves are not measured spectra, and the simulator is not a detection or orbit-fitting system. My Research data is stored locally in the browser. ORBITAL is not affiliated with or endorsed by NASA or NASA Space Apps. NASA does not endorse any non-U.S. Government entity and is not responsible for information contained on non-U.S. Government websites.
+
+USE OF SUPER INTELLIGENCE (SI)
+Suggested selection: Chatbots / large language models (AI assistance was used for code work and drafting this submission text). Also select any “Code” or “Text” SI category if the form offers separate choices.
+The project now discloses AI-assisted code development and documentation in README.md and the website’s Sources & Calculations page. No AI-generated scientific data, NASA data, project imagery, or video is claimed. The project’s sonification is generated programmatically from illustrative values, not by an AI audio model. The hero image is credited NASA/JPL-Caltech artist-concept artwork, not AI-generated.
+
+NASA DATA AND RESOURCES (add each as a separate link)
+Link Text: NASA/IPAC IRSA SPHEREx archive
+Link URL: https://irsa.ipac.caltech.edu/Missions/spherex.html
+Role: The backend searches released SPHEREx archive records and retrieves available image products.
+
+Link Text: SPHEREx Data Release 1 (DR1)
+Link URL: https://doi.org/10.26131/IRSA678
+Role: Archive data release used for returned records/products.
+
+Link Text: SPHEREx Quick Release 3 (QR3)
+Link URL: https://doi.org/10.26131/IRSA662
+Role: Archive data release used for returned records/products.
+
+Link Text: NASA/IPAC Infrared Science Archive SIA service
+Link URL: https://irsa.ipac.caltech.edu/SIA
+Role: Archive search service reference.
+
+Link Text: STScI Digitized Sky Survey (DSS)
+Link URL: https://archive.stsci.edu/dss/
+Role: Source of curated optical reference cutouts. Demo sequence dates are illustrative; DSS imagery is not SPHEREx data. Review the MAST reuse conditions before redistribution or commercial use.
+
+Link Text: MAST DSS data-use policy
+Link URL: https://archive.stsci.edu/publishing/data-use
+Role: Image use and attribution conditions for DSS assets.
+
+Link Text: NASA SPHEREx mission overview
+Link URL: https://science.nasa.gov/mission/spherex/
+Role: Mission context.
+
+Link Text: SPHEREx in Orbit — artist’s concept (NASA/JPL-Caltech)
+Link URL: https://science.nasa.gov/photojournal/spherex-in-orbit-artists-concept/
+Role: Credited decorative artwork used in the project; not observation data.
+
+SPACE AGENCY PARTNER & OTHER DATA / RESOURCES (add each actually used)
+Link Text: CDS Aladin Lite
+Link URL: https://aladin.cds.unistra.fr/AladinLite/
+Role: Embedded sky atlas and access to HiPS survey layers. These layers are separate views, not data combined with SPHEREx calculations.
+
+Link Text: Wide-field Infrared Survey Explorer (AllWISE / NEOWISE)
+Link URL: https://irsa.ipac.caltech.edu/data/WISE/docs/release/AllWISE/expsup/
+Role: Survey layer/documentation accessible from the embedded atlas; ORBITAL does not use WISE measurements in its calculations.
+
+Link Text: Two Micron All Sky Survey (2MASS)
+Link URL: https://irsa.ipac.caltech.edu/Missions/2mass.html
+Role: Survey layer accessible in Aladin; ORBITAL does not use 2MASS measurements in its calculations.
+
+Link Text: SIMBAD Astronomical Database
+Link URL: https://simbad.cds.unistra.fr/simbad/
+Role: Object/catalog reference.
+
+Link Text: ESA Gaia Data Release 3 documentation
+Link URL: https://www.cosmos.esa.int/web/gaia/data-release-3
+Role: Catalog documentation/reference only; the app does not query Gaia DR3 for calculations.
+
+Link Text: Next.js
+Link URL: https://nextjs.org/
+Role: Web framework used to build the application.
+
+Link Text: React
+Link URL: https://react.dev/
+Role: User-interface library.
+
+Link Text: FastAPI
+Link URL: https://fastapi.tiangolo.com/
+Role: Python API framework.
+
+Link Text: Astropy
+Link URL: https://www.astropy.org/
+Role: FITS and astronomy data handling.
+
+Link Text: Pillow
+Link URL: https://python-pillow.org/
+Role: Image processing for previews.
+
+VERIFICATION (user action required)
+Agree to Terms and Conditions: This is your/team’s legal attestation. Review the current terms and check the box yourself only if you agree.
+
+Confirm All Work is Original: This is your/team’s attestation. Review the project’s code, text, images, and other resources against the citations above; correct the resource lists as needed, then check the box yourself only if it is accurate. The repository code is MIT-licensed, but the license does not cover the separately sourced DSS images or NASA/JPL artwork.
+
+DEMO FILE
+ORBITAL_Project_Demo_7_Slides.pdf (7 slides, landscape). Publish this file publicly before using it as the demonstration URL.

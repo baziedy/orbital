@@ -1,0 +1,69 @@
+@use 'sass:color';
+@use './variables' as *;
+@use './animations' as *;
+@use './astronomy' as *;
+@use './comparator' as *;
+
+.luxury-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  background-color: $luxury-white;
+  border: 1px solid $luxury-border;
+  font-family: $font-mono;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $luxury-text-secondary;
+}
+
+.luxury-button-primary {
+  background-color: $luxury-text-primary;
+  color: $luxury-white;
+  font-family: $font-sans;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.65rem 1.25rem;
+  border-radius: 2px;
+  transition: all $transition-fast;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: color.adjust($luxury-text-primary, $lightness: 10%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.luxury-button-secondary {
+  background-color: $luxury-white;
+  color: $luxury-text-primary;
+  border: 1px solid $luxury-border;
+  font-family: $font-sans;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.65rem 1.25rem;
+  border-radius: 2px;
+  transition: all $transition-fast;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: $luxury-bg;
+    border-color: $luxury-text-primary;
+  }
+}

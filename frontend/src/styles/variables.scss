@@ -1,0 +1,31 @@
+$space-abyss: #090A0D;
+$space-obsidian: #101114;
+$space-surface: #181A20;
+$space-border: #26282E;
+$space-highlight: #32353E;
+
+$luxury-white: #FFFFFF;
+$luxury-bg: #F7F7F5;
+$luxury-subtle: #EEEEEC;
+$luxury-border: #E7E7E4;
+$luxury-text-primary: #111111;
+$luxury-text-secondary: #737373;
+$luxury-text-muted: #8A8A83;
+
+$sci-cyan: #FFFFFF;
+$sci-sky: #FFFFFF;
+$sci-infrared: #9CA3AF;
+$sci-thermal-red: #EF4444;
+$sci-emerald: #9CA3AF;
+$sci-violet: #9CA3AF;
+$sci-amber: #9CA3AF;
+
+$font-editorial: 'DM Serif Display', Georgia, serif;
+$font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+$ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+$ease-celestial: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$transition-fast: 150ms $ease-luxury;
+$transition-medium: 300ms $ease-luxury;
+$transition-smooth: 500ms $ease-luxury;

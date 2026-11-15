@@ -1,0 +1,48 @@
+# ORBITAL Calculation Audit and UX Fixes
+
+## Scope and limits
+
+I reviewed the calculation paths used by the comparison API, astrometry widget, image-difference preview, and light-curve widget. This checks the implemented formulas and how the UI describes their inputs. It does **not** independently validate every catalog value against a scientific archive, and the curated examples are not suitable for scientific conclusions.
+
+## Findings and changes
+
+| Area | Issue found | Change made |
+|---|---|---|
+| Angular separation | RA wraparound and floating-point edge cases could produce inaccurate or invalid great-circle calculations. | Use a validated haversine calculation, normalize naturally across RA=0, clamp rounding error, and validate RA/Dec ranges. |
+| Observation dates | Naive and timezone-aware timestamps could not be subtracted safely; invalid dates could lead to misleading zero baselines and hide otherwise available position metrics. | Interpret timezone-naive ISO dates as UTC and normalize aware dates to UTC. Invalid dates leave the time baseline/rate unavailable without suppressing valid position metrics; a zero baseline never produces a fabricated annualized rate. |
+| Flux differences | The code parsed the first string token, silently turned parsing failures into `0%`, and compared fluxes even across different filters. | Compare only same-band pairs; accept finite positive values explicitly expressed in mJy; report missing/invalid values as unavailable (`null`) instead of zero. |
+| Proper-motion interpretation | The comparison treated observation pointing coordinates as source centroids and described their offset as target motion. | Label the metric as **field-center separation/rate** and state that it is not source proper motion. Compare can display an offset-based speed using an assumed distance; that value is not the target's physical tangential velocity. |
+| Astrometry widget | Earlier code substituted a half-year baseline for identical/invalid epochs and used a small-angle offset that did not handle RA wraparound. Its visible year fields did not control the baseline when archive dates were supplied. | The widget now initializes editable decimal years from supplied dates, uses those visible values for the baseline, uses great-circle separation and spherical position angle, validates coordinate ranges, and leaves rate/speed unavailable when the coordinates, baseline, or distance cannot support them. Its inputs are field-center coordinates unless a user supplies other coordinates; no source centroid is extracted. |
+| Source-motion calculator in Compare | There is no manual measured-centroid mode. The Compare page supplies observation field centers to the coordinate calculator. | The calculator labels its result as a field-center offset rate and disclaims source-motion measurement. A source-centroid workflow remains unimplemented; do not describe these values as measured stellar proper motion. |
+| Image-comparison guidance | There was no interactive before/after example in the guide, and comparison labels were inside the clipped image layer, so the divider could cover or clip them. | Add a draggable before/after example to the guide and place both epoch labels above the image/divider layers with a high stacking order. |
+| Light curves | Hard-coded synthetic curves looked like observed photometry; RW Aurigae and unrecognized targets inherited an unsupported 380-day fold, generated dates depended on local time zone, and the 730-day plot ended at day 720. | Label curves and periods as illustrative, expose phase folding only for the example targets with an assigned period, generate dates in UTC, include the exact 730-day endpoint, and retain full phase precision for sorting. |
+| Spectral preview | Generated model curves are not measured spectra; the 1.66 µm methane marker was assigned to the wrong array, the methane filter omitted Array 3, and a 1.85× synthetic scale mode suggested a derived flux product. | Keep the curves and wavelength guides explicitly illustrative, assign 1.66 µm to Array 3, include Arrays 3 and 4 in the methane filter, and remove the arbitrary scaled curve. The wavelength guides remain reference markers, not detections. |
+| Curated observations | Curated records were marked `is_demo=False`, although their dates/flux values are illustrative and their image cutouts are reference archive images rather than SPHEREx source measurements. | Mark curated records as demo data and make their source labels explicit. Added demo warnings in Explore/Compare. The astrometry example now uses the project's 7.43 ly WISE 0855 distance input; the example coordinates and epochs remain illustrative and do not represent catalog proper-motion measurements. |
+| Difference and average images | The endpoint substituted random/example images when observations or previews were unavailable. Independent normalization and pixel subtraction were described as calibrated difference imaging; the average preview claimed a `√2` SNR gain without registration, variance weighting, or calibrated inputs. | Remove synthetic fallback images; require known, distinct, same-band observations with valid dates and available previews; map source previews to a common aspect-preserving 512-pixel display canvas. Label subtraction as a display-only normalized raster difference and averaging as an arithmetic mean, with no scientific registration/calibration or SNR claim. |
+| Planet X reflex-speed output | The Sources page described a reflex-speed result, but the simulator did not calculate or display one despite accepting a body mass. | Calculate and display the idealized two-body solar reflex speed from the modeled orbital speed and the entered planet-to-Sun mass ratio; keep the circular-orbit assumptions explicit. |
+| Compare selector UX | Editing an observation ID triggered network requests on every keystroke. | Keep edits as drafts and add a **Compare observations** button; presets still apply immediately. |
+| Comparison slider | The preview images could start native browser image dragging, making the comparison handle unreliable and difficult to grab. | Disable native image dragging, enlarge the handle hit area, support mouse/touch dragging from the handle, allow intentional track clicks, and add keyboard arrow/Home/End controls. |
+| Candidate pins | Screen-pixel marks were named “discovery candidates” and shown as confirmed dipoles. | Rename them visual notes and clarify that screen positions are not sky coordinates or confirmed detections. |
+| Other factual display issues | The About page rounded the SPHEREx field of view differently from the instrument specification; the light-curve band label did not match SPHEREx Band 2; a comparison export could append `%` to an unavailable value; and the static sky selector exposed repeated image files as separate choices. | Use the 11.3° × 3.5° field of view and Band 2's 1.10–1.62 µm range, format unavailable percentages without a unit, and show only unique reference-image choices per target. |
+
+**Preset proper-motion clarification:** The Astrometry presets use explicitly illustrative coordinate pairs and dates. Their calculated offsets do not purport to reproduce the listed stars' catalog proper motions, so comparing those output rates or directions directly with measured catalog motions is not a valid discrepancy. The WISE 0855 distance input was corrected to the project's adopted approximate value of 7.43 light-years.
+
+## Calculation definitions now shown
+
+- **Field-center separation:** great-circle angular distance between the two recorded RA/Dec pairs. These coordinates describe observation pointings, not measured object centroids.
+- **Annualized field-center offset rate:** field-center separation divided by elapsed days and scaled by 365.25. It describes pointing-coordinate separation only.
+- **Flux change relative to A:** `(flux_B - flux_A) / flux_A × 100`, only when both values are finite, positive, expressed in mJy, and from the same band. A percentage is not returned when these conditions are not met.
+- **Tangential speed:** `4.74047 × μ × d`, with angular rate `μ` in arcsec/year and distance `d` in parsecs. In Compare, the displayed field-center offset rate can be converted to an illustrative offset-based speed; this is not the target's physical velocity. It does not correct for parallax or measurement uncertainty.
+- **Image preview subtraction/average:** display-pixel operations only. The current pipeline does not perform WCS registration, PSF matching, calibrated photometry, or variance-weighted stacking.
+
+## Remaining work before scientific use
+
+- Replace curated synthetic metadata and illustrative light curves with documented, calibrated measurements and source citations.
+- Implement WCS-based image registration, PSF matching, photometric calibration, uncertainty propagation, and scientifically valid stacking before presenting difference images as detections or measurements.
+- Measure source centroids and uncertainties from the FITS data, then account for parallax and reference-frame effects before reporting proper motion or physical velocity.
+- Independently verify all catalog distances, proper motions, epochs, bands, and fluxes against authoritative sources. This audit corrected internal inconsistencies but is not a full external catalog review.
+
+## Validation
+
+- Added backend unit tests for RA wraparound, invalid coordinates, timezone normalization, relative flux percentage, incompatible bands, invalid flux, and invalid/identical dates.
+- Frontend production build and lint were run after the changes. See the completion summary for the final test outcomes.

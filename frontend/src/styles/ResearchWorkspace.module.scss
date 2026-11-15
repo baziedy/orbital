@@ -1,0 +1,762 @@
+@use "./variables" as *;
+
+/* Focused styling for the multi-epoch comparison area */
+.pageShell {
+  max-width: 1600px;
+}
+
+.pageShell :global(.rounded-lg),
+.pageShell :global(.rounded-xl),
+.pageShell :global(.rounded-2xl) {
+  border-radius: 2px;
+}
+
+.workspaceLayout {
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  }
+}
+
+.pageShell > header {
+  padding-bottom: 2rem;
+  border-color: #dce5ee;
+}
+
+.workspaceLayout > aside > section,
+.workspaceLayout > section > div > section:not(.comparePanel),
+.workspaceLayout > section > div > div > section:not(.comparePanel) {
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(27, 47, 71, 0.045);
+}
+
+.comparePanel {
+  border-color: #dfe7ef;
+  box-shadow: 0 12px 36px rgba(27, 47, 71, 0.06);
+}
+
+.compareHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 28px;
+  border-bottom: 1px solid #e6edf4;
+  background: linear-gradient(115deg, #fff 45%, #f5faff 100%);
+}
+
+.epochPickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
+}
+
+.epochPicker {
+  display: grid;
+  gap: 5px;
+  min-width: 150px;
+  color: #818894;
+  font: 600 9px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  select {
+    width: 100%;
+    max-width: 220px;
+    min-width: 0;
+    height: 36px;
+    padding: 0 30px 0 10px;
+    border: 1px solid #e2e5e9;
+    border-radius: 6px;
+    outline: none;
+    background: #fff;
+    color: #252a31;
+    font: 500 11px/1.2 Inter, ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+
+    &:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+}
+
+.compareToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 18px 24px 0;
+  padding: 8px;
+  border: 1px solid #e4ebf2;
+  border-radius: 10px;
+  background: #f7faff;
+}
+
+.viewModes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.viewModeButton {
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: #737b85;
+  font-size: 11px;
+  font-weight: 500;
+  transition: background 0.16s, color 0.16s, border-color 0.16s;
+
+  &:hover {
+    color: #20252b;
+    background: #fff;
+  }
+
+  &[aria-pressed="true"] {
+    border-color: #e4e7eb;
+    background: #fff;
+    color: #171b20;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  }
+}
+
+.analyzeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 5px;
+  background: #17191d;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  transition: background 0.18s, transform 0.18s;
+
+  &:hover {
+    background: #30343a;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.55;
+  }
+}
+
+.comparisonWorkspace {
+  padding: 18px 24px 10px;
+}
+
+.comparisonStage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 320px;
+  max-height: 760px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid #24272c;
+  border-radius: 10px;
+  background: #08090b;
+  touch-action: pan-y;
+}
+
+.comparisonImage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.observationCard {
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  display: grid;
+  gap: 4px;
+  min-width: 158px;
+  max-width: min(42%, 240px);
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 2px;
+  background: rgba(13, 15, 18, 0.88);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+
+  span {
+    overflow: hidden;
+    color: #f4f6f8;
+    font: 600 10px/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  strong {
+    color: #d7dce2;
+    font: 500 10px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  small {
+    color: #858d97;
+    font: 400 9px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+}
+
+.observationBefore { left: 14px; }
+.observationAfter {
+  right: 14px;
+  text-align: right;
+
+  span {
+    color: #55c8ff;
+  }
+}
+
+.sliderDivider {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.55);
+  transform: translateX(-0.5px);
+  pointer-events: none;
+  transition: left 70ms linear;
+}
+
+.sliderHandle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1.5px solid white;
+  border-radius: 50%;
+  background: rgba(12, 15, 19, 0.88);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  transform: translate(-50%, -50%);
+
+  span {
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid white;
+    border-left: 1.5px solid white;
+  }
+}
+
+.comparisonRange {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+
+.compareDisclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 8px 24px 20px;
+  color: #7b838d;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.resultsPanel {
+  display: grid;
+  gap: 22px;
+  padding: 24px;
+  border: 1px solid $luxury-border;
+  border-radius: 2px;
+  background: $luxury-white;
+  box-shadow: 0 1px 3px rgba(17, 17, 17, 0.045);
+}
+
+.resultsHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid $luxury-border;
+}
+
+.resultsEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $luxury-text-muted;
+  font: 600 10px/1.4 $font-mono;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  span {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    background: #D97706;
+  }
+}
+
+.resultsTitle {
+  margin-top: 5px;
+  color: $luxury-text-primary;
+  font: 400 22px/1.25 $font-editorial;
+  letter-spacing: -0.02em;
+}
+
+.resultsDescription {
+  max-width: 720px;
+  margin-top: 8px;
+  color: #555555;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.resultsBadge {
+  flex: 0 0 auto;
+  padding: 6px 8px;
+  border: 1px solid $luxury-border;
+  border-radius: 2px;
+  background: $luxury-bg;
+  color: $luxury-text-secondary;
+  font: 600 9px/1 $font-mono;
+  letter-spacing: 0.1em;
+}
+
+.metricCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 108px;
+  padding: 17px 16px 16px 19px;
+  border: 1px solid $luxury-border;
+  border-radius: 2px;
+  background: $luxury-white;
+  transition: border-color $transition-fast, background-color $transition-fast, transform $transition-fast;
+
+  &::before {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: $sci-emerald;
+    content: "";
+  }
+
+  &[data-tone="1"]::before { background: #F59E0B; }
+  &[data-tone="2"]::before { background: #B45309; }
+  &[data-tone="3"]::before { background: #FBBF24; }
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: #b9dff0;
+    background: #f7fbfd;
+  }
+}
+
+.metricLabel {
+  color: $luxury-text-muted;
+  font: 600 9px/1.45 $font-mono;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.metricValue {
+  color: #B45309;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.blinkWorkspace {
+  display: grid;
+  gap: 12px;
+  padding: 16px 24px 10px;
+  background: $luxury-white;
+}
+
+.blinkControls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 9px 10px;
+  border: 1px solid $luxury-border;
+  border-radius: 2px;
+  background: $luxury-bg;
+  font-family: $font-mono;
+}
+
+.blinkControlsLabel {
+  margin-right: 4px;
+  color: $luxury-text-secondary;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.blinkSpeedButton {
+  min-width: 42px;
+  padding: 5px 8px;
+  border: 1px solid $luxury-border;
+  border-radius: 2px;
+  background: $luxury-white;
+  color: $luxury-text-secondary;
+  font-size: 10px;
+  transition: color $transition-fast, border-color $transition-fast, background-color $transition-fast;
+
+  &:hover {
+    border-color: $sci-sky;
+    color: $luxury-text-primary;
+  }
+
+  &[aria-pressed="true"] {
+    border-color: $sci-sky;
+    background: $sci-sky;
+    color: #fff;
+    font-weight: 700;
+  }
+}
+
+.blinkHint {
+  margin-left: 3px;
+  color: $luxury-text-muted;
+  font-size: 9px;
+}
+
+.blinkPreview {
+  width: 100%;
+
+  :global(figure) {
+    width: 100%;
+    border-color: $luxury-border;
+    border-radius: 2px;
+    background: $luxury-white;
+  }
+
+  :global(figure > div) {
+    width: 100%;
+    height: clamp(320px, 55vw, 600px);
+    max-height: none;
+    aspect-ratio: auto;
+    background: #101114;
+  }
+
+  :global(figure img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  :global(figure figcaption) {
+    border-top: 1px solid $luxury-border;
+    background: $luxury-white;
+    color: $luxury-text-secondary;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .resultsPanel {
+    gap: 16px;
+    padding: 18px 14px;
+    border-radius: 2px;
+  }
+
+  .resultsHeader {
+    gap: 12px;
+  }
+
+  .resultsTitle {
+    font-size: 20px;
+  }
+
+  .resultsDescription {
+    font-size: 12px;
+  }
+
+  .resultsBadge {
+    display: none;
+  }
+
+  .metricGrid {
+    gap: 8px;
+  }
+
+  .metricCard {
+    min-height: 98px;
+    gap: 8px;
+    padding: 12px 10px;
+  }
+
+  .metricLabel {
+    font-size: 9px;
+  }
+
+  .metricValue {
+    font-size: 14px;
+  }
+
+  .compareHeader {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .epochPickers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .epochPicker {
+    min-width: 0;
+
+    select {
+      max-width: none;
+    }
+  }
+
+  .compareToolbar {
+    align-items: stretch;
+    flex-direction: column;
+    margin: 12px 14px 0;
+  }
+
+  .viewModes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .viewModeButton {
+    padding: 8px 5px;
+    font-size: 10px;
+  }
+
+  .analyzeButton {
+    width: 100%;
+  }
+
+  .comparisonWorkspace {
+    padding: 14px 14px 8px;
+  }
+
+  .comparisonStage {
+    min-height: 240px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .observationCard {
+    top: 9px;
+    min-width: 0;
+    max-width: 46%;
+    padding: 7px 8px;
+
+    span {
+      font-size: 8px;
+    }
+
+    strong,
+    small {
+      font-size: 8px;
+    }
+  }
+
+  .observationBefore { left: 9px; }
+  .observationAfter { right: 9px; }
+
+  .sliderHandle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .compareDisclaimer {
+    margin: 6px 14px 16px;
+  }
+
+  .blinkWorkspace {
+    padding: 12px 14px 8px;
+  }
+
+  .blinkPreview :global(figure > div) {
+    height: clamp(260px, 72vw, 440px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sliderDivider,
+  .viewModeButton,
+  .analyzeButton,
+  .metricCard,
+  .blinkSpeedButton {
+    transition: none;
+  }
+}
+
+:global(html.dark) {
+  .pageShell {
+    color: #F3F4F6 !important;
+  }
+
+  .pageShell > header {
+    border-color: #26282E;
+  }
+
+  .pageShell :global(.bg-white) {
+    background-color: #12141A !important;
+    color: #F3F4F6;
+  }
+
+  .metricValue {
+    color: #FBBF24;
+  }
+
+  /* Research Workspace predates the shared dark utilities and uses several
+     short hex text classes. Keep every foreground readable on its dark cards. */
+  .pageShell :global([class*="text-[#1"]),
+  .pageShell :global([class*="text-[#2"]),
+  .pageShell :global([class*="text-[#3"]),
+  .pageShell :global([class*="text-[#4"]),
+  .pageShell :global([class*="text-[#5"]),
+  .pageShell :global([class*="text-[#6"]),
+  .pageShell :global([class*="text-[#7"]),
+  .pageShell :global([class*="text-[#8"]),
+  .pageShell :global([class*="text-[#9"]) {
+    color: #E5E7EB !important;
+  }
+
+  .pageShell :global([class*="bg-[#F7F9FB]"]),
+  .pageShell :global([class*="bg-[#FAFAF8]"]),
+  .pageShell :global([class*="bg-sky-50"]),
+  .pageShell :global([class*="bg-violet-50"]) {
+    background-color: #161820 !important;
+  }
+
+  .pageShell :global([class*="text-sky-"]),
+  .pageShell :global([class*="text-violet-"]) {
+    color: #FBBF24 !important;
+  }
+
+  .pageShell :global(.orbital-note-editor) {
+    color: #F3F4F6 !important;
+  }
+
+  .pageShell :global(.border-\[\#E6E9ED\]) {
+    border-color: #26282E !important;
+  }
+
+  .comparePanel {
+    border-color: #26282E;
+    background-color: #12141A;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .22);
+  }
+
+  .compareHeader {
+    border-color: #26282E;
+    background: linear-gradient(115deg, #12141A 45%, #161820 100%);
+  }
+
+  .epochPicker {
+    color: #F3F4F6;
+  }
+
+  .epochPicker select {
+    border-color: #26282E;
+    background-color: #161820;
+    color: #F3F4F6;
+  }
+
+  .compareToolbar,
+  .blinkControls {
+    border-color: #26282E;
+    background: #161820;
+  }
+
+  .viewModeButton {
+    color: #9CA3AF;
+
+    &:hover,
+    &[aria-pressed="true"] {
+      border-color: #26282E;
+      background: #1A1D24;
+      color: #F3F4F6;
+    }
+  }
+
+  .analyzeButton,
+  .blinkSpeedButton[aria-pressed="true"] {
+    background: #FFFFFF;
+    color: #111111;
+  }
+
+  .resultsPanel,
+  .metricCard,
+  .blinkWorkspace,
+  .blinkSpeedButton {
+    border-color: #26282E;
+    background: #12141A;
+    color: #F3F4F6;
+  }
+
+  .resultsHeader {
+    border-color: #26282E;
+  }
+
+  .resultsDescription,
+  .metricLabel,
+  .blinkHint {
+    color: #E5E7EB;
+  }
+
+  .resultsBadge {
+    border-color: #26282E;
+    background: #161820;
+    color: #D1D5DB;
+  }
+
+  .metricCard:hover {
+    border-color: #4B5563;
+    background: #161820;
+  }
+
+  .blinkPreview :global(figure),
+  .blinkPreview :global(figure figcaption) {
+    border-color: #26282E;
+    background: #12141A;
+    color: #D1D5DB;
+  }
+}
