@@ -372,15 +372,15 @@ export default function ComparisonSlider({ obsA, obsB, comparisonResult }: Compa
           </div>
 
           <div className="pointer-events-none absolute inset-x-3 top-3 z-10 flex items-start justify-between gap-2 sm:inset-x-4 sm:top-4">
-            <div className="grid min-w-0 max-w-[46%] gap-0.5 rounded-sm border border-white/15 bg-[#101114]/90 px-2.5 py-2 text-left shadow-lg backdrop-blur-md sm:px-3">
-              <span className="truncate font-mono-sci text-[9px] font-semibold uppercase tracking-wider text-amber-300 sm:text-[10px]">Observation A</span>
-              <strong className="truncate text-xs font-semibold text-white sm:text-sm">{obsA.target_name}</strong>
-              <span className="truncate font-mono-sci text-[9px] text-white/70 sm:text-[10px]">{obsA.is_demo ? "Illustrative reference date" : obsA.observation_date.slice(0, 10)} · {obsA.band}</span>
+            <div className="grid min-w-0 max-w-[46%] gap-1 rounded-sm border border-white/[.13] bg-[#0D0F12]/[.88] px-2.5 py-2 text-left shadow-lg backdrop-blur-[10px] sm:px-3">
+              <span className="truncate font-mono-sci text-[9px] font-semibold uppercase tracking-wider text-[#F4F6F8] sm:text-[10px]">Observation A</span>
+              <strong className="truncate text-xs font-semibold text-[#D7DCE2] sm:text-sm">{obsA.target_name}</strong>
+              <span className="truncate font-mono-sci text-[9px] text-[#858D97] sm:text-[10px]">{obsA.is_demo ? "Illustrative reference date" : obsA.observation_date.slice(0, 10)} · {obsA.band}</span>
             </div>
-            <div className="grid min-w-0 max-w-[46%] gap-0.5 rounded-sm border border-white/15 bg-[#101114]/90 px-2.5 py-2 text-right shadow-lg backdrop-blur-md sm:px-3">
-              <span className="truncate font-mono-sci text-[9px] font-semibold uppercase tracking-wider text-orange-300 sm:text-[10px]">Observation B</span>
-              <strong className="truncate text-xs font-semibold text-white sm:text-sm">{obsB.target_name}</strong>
-              <span className="truncate font-mono-sci text-[9px] text-white/70 sm:text-[10px]">{obsB.is_demo ? "Illustrative reference date" : obsB.observation_date.slice(0, 10)} · {obsB.band}</span>
+            <div className="grid min-w-0 max-w-[46%] gap-1 rounded-sm border border-white/[.13] bg-[#0D0F12]/[.88] px-2.5 py-2 text-right shadow-lg backdrop-blur-[10px] sm:px-3">
+              <span className="truncate font-mono-sci text-[9px] font-semibold uppercase tracking-wider text-[#55C8FF] sm:text-[10px]">Observation B</span>
+              <strong className="truncate text-xs font-semibold text-[#D7DCE2] sm:text-sm">{obsB.target_name}</strong>
+              <span className="truncate font-mono-sci text-[9px] text-[#858D97] sm:text-[10px]">{obsB.is_demo ? "Illustrative reference date" : obsB.observation_date.slice(0, 10)} · {obsB.band}</span>
             </div>
           </div>
 
@@ -477,10 +477,10 @@ export default function ComparisonSlider({ obsA, obsB, comparisonResult }: Compa
             onClick={pinningActive ? handleViewportClick : undefined}
           >
             <div className="relative h-[300px] sm:h-[380px] bg-[#101114] border border-[#26282E] rounded-sm overflow-hidden flex items-center justify-center">
-              <div className="absolute top-4 left-4 z-10 bg-[#101114]/85 backdrop-blur-md px-3 py-1.5 border border-[#26282E] rounded-sm text-xs font-mono-sci">
-                <span className="text-[#FFFFFF] font-semibold block">Observation A (Image Preview)</span>
-                <span className="text-[#9CA3AF] text-[10px] block">{obsA.is_demo ? "Illustrative sequence date" : obsA.observation_date.slice(0, 10)}</span>
-                <span className="text-[#737373] text-[10px] block">{obsA.band}</span>
+              <div className="absolute top-4 left-4 z-10 grid gap-1 bg-[#0D0F12]/[.88] backdrop-blur-[10px] px-3 py-2 border border-white/[.13] rounded-sm text-xs font-mono-sci">
+                <span className="text-[#F4F6F8] font-semibold block">Observation A (Image Preview)</span>
+                <span className="text-[#D7DCE2] text-[10px] block">{obsA.is_demo ? "Illustrative sequence date" : obsA.observation_date.slice(0, 10)}</span>
+                <span className="text-[#858D97] text-[9px] block">{obsA.band}</span>
               </div>
               <ObservationPreviewImage
                 src={refreshImageUrl(obsA.preview_url)}
@@ -492,10 +492,10 @@ export default function ComparisonSlider({ obsA, obsB, comparisonResult }: Compa
             </div>
 
             <div className="relative h-[300px] sm:h-[380px] bg-[#101114] border border-[#26282E] rounded-sm overflow-hidden flex items-center justify-center">
-              <div className="absolute top-4 left-4 z-10 bg-[#101114]/85 backdrop-blur-md px-3 py-1.5 border border-[#26282E] rounded-sm text-xs font-mono-sci">
-                <span className="text-[#38BDF8] font-semibold block">Observation B (Image Preview)</span>
-                <span className="text-[#9CA3AF] text-[10px] block">{obsB.is_demo ? "Illustrative sequence date" : obsB.observation_date.slice(0, 10)}</span>
-                <span className="text-[#737373] text-[10px] block">{obsB.band}</span>
+              <div className="absolute top-4 left-4 z-10 grid gap-1 bg-[#0D0F12]/[.88] backdrop-blur-[10px] px-3 py-2 border border-white/[.13] rounded-sm text-xs font-mono-sci">
+                <span className="text-[#55C8FF] font-semibold block">Observation B (Image Preview)</span>
+                <span className="text-[#D7DCE2] text-[10px] block">{obsB.is_demo ? "Illustrative sequence date" : obsB.observation_date.slice(0, 10)}</span>
+                <span className="text-[#858D97] text-[9px] block">{obsB.band}</span>
               </div>
               <ObservationPreviewImage
                 src={refreshImageUrl(obsB.preview_url)}

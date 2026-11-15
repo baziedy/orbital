@@ -206,7 +206,7 @@ function ObservationPicker({
     <div ref={pickerRef} className="relative min-w-0">
       <div className="mb-2 flex items-center justify-between gap-2">
         <span className="flex items-center gap-2 font-mono-sci text-[10px] font-semibold uppercase tracking-wider text-[#555555] dark:text-[#D1D5DB]">
-          <span className={`flex h-5 w-5 items-center justify-center rounded-sm text-[10px] text-white ${side === "A" ? "bg-amber-700" : "bg-orange-600"}`}>{side}</span>
+          <span className="flex h-5 w-5 items-center justify-center rounded-sm bg-sky-700 text-[10px] text-white">{side}</span>
           {side === "A" ? "Observation A (Image Preview)" : "Observation B (Image Preview)"}
         </span>
         {selected && <span className="text-[10px] font-mono-sci text-[#737373] dark:text-[#9CA3AF]">{selected.is_demo ? "REFERENCE" : "SPHEREx"}</span>}
@@ -219,7 +219,7 @@ function ObservationPicker({
         aria-expanded={open}
         aria-controls={listId}
         onClick={() => { setQuery(""); setOpen((value) => !value); }}
-        className="flex min-h-[76px] w-full min-w-0 items-center justify-between gap-3 rounded-sm border border-[#E7E7E4] bg-white px-3 py-3 text-left transition hover:border-amber-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/40 disabled:cursor-wait disabled:opacity-60 dark:border-[#343741] dark:bg-[#101114] dark:hover:border-amber-400"
+        className="flex min-h-[76px] w-full min-w-0 items-center justify-between gap-3 rounded-sm border border-[#E2E5E9] bg-white px-3 py-3 text-left transition hover:border-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/20 disabled:cursor-wait disabled:opacity-60 dark:border-[#343741] dark:bg-[#101114] dark:hover:border-sky-400"
       >
         <span className="min-w-0">
           <span className="block truncate text-sm font-semibold text-[#111111] dark:text-[#F3F4F6]">{selected?.target_name || (disabled ? "Loading observations…" : "Choose an observation")}</span>
@@ -229,7 +229,7 @@ function ObservationPicker({
       </button>
 
       {open && (
-        <div className="mt-1.5 max-h-[min(62vh,440px)] overflow-hidden rounded-sm border border-[#D8D8D2] bg-white shadow-lg dark:border-[#343741] dark:bg-[#12141A]">
+        <div className="mt-1.5 max-h-[min(62vh,440px)] overflow-hidden rounded-sm border border-[#E2E5E9] bg-white shadow-lg dark:border-[#343741] dark:bg-[#12141A]">
           <label className="flex items-center gap-2 border-b border-[#E7E7E4] px-3 dark:border-[#26282E]">
             <Search aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-[#8A8A83]" />
             <input autoFocus type="search" value={query} onChange={(event) => { setQuery(event.target.value); setArchiveSearchMessage(null); }} placeholder="Search loaded observations…" aria-label={`Search Observation ${side} options`} className="h-10 min-w-0 flex-1 border-0 bg-transparent text-xs text-[#111111] outline-none focus:ring-0 dark:text-[#F3F4F6]" />
@@ -237,7 +237,7 @@ function ObservationPicker({
           {archiveSearchMessage && <p role="status" className="border-b border-[#E7E7E4] px-3 py-2 text-[10px] leading-relaxed text-[#555555] dark:border-[#26282E] dark:text-[#D1D5DB]">{archiveSearchMessage}</p>}
           <div className="flex items-center justify-between gap-2 border-b border-[#E7E7E4] px-3 py-2 dark:border-[#26282E]">
             <span className="text-[10px] text-[#737373] dark:text-[#9CA3AF]">Find more observations by object name</span>
-            <button type="button" onClick={() => void searchNASAArchive()} disabled={!query.trim() || isArchiveSearching} className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-[#111111] px-2.5 py-1.5 font-mono-sci text-[9px] font-semibold uppercase tracking-wide text-white transition hover:bg-amber-700 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-amber-500 dark:text-[#111111] dark:hover:bg-amber-400">
+            <button type="button" onClick={() => void searchNASAArchive()} disabled={!query.trim() || isArchiveSearching} className="inline-flex shrink-0 items-center gap-1.5 rounded-sm bg-sky-700 px-2.5 py-1.5 font-mono-sci text-[9px] font-semibold uppercase tracking-wide text-white transition hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-sky-500 dark:text-[#111111] dark:hover:bg-sky-400">
               {isArchiveSearching ? <RefreshCw className="h-3 w-3 animate-spin" /> : <Search className="h-3 w-3" />}
               {isArchiveSearching ? "Searching" : "Search NASA IRSA"}
             </button>
@@ -255,7 +255,7 @@ function ObservationPicker({
                       role="option"
                       aria-selected={isSelected}
                       onClick={() => { onSelect(observation.observation_id); setOpen(false); setQuery(""); }}
-                      className={`flex w-full items-center justify-between gap-3 rounded-sm px-2.5 py-2 text-left transition ${isSelected ? "bg-amber-50 dark:bg-amber-950/30" : "hover:bg-[#F7F7F5] dark:hover:bg-[#1A1D26]"} disabled:cursor-not-allowed disabled:opacity-40`}
+                      className={`flex w-full items-center justify-between gap-3 rounded-sm px-2.5 py-2 text-left transition ${isSelected ? "bg-sky-50 dark:bg-sky-950/30" : "hover:bg-[#F7FAFF] dark:hover:bg-[#1A1D26]"} disabled:cursor-not-allowed disabled:opacity-40`}
                     >
                       <span className="min-w-0">
                         <span className="block truncate text-xs font-semibold text-[#222222] dark:text-[#E5E7EB]">{observation.target_name}</span>
@@ -263,7 +263,7 @@ function ObservationPicker({
                       </span>
                       <span className="flex shrink-0 items-center gap-1.5">
                         <span className="rounded-sm bg-[#F7F7F5] px-1.5 py-1 font-mono-sci text-[8px] text-[#737373] dark:bg-[#1A1D26] dark:text-[#A1A1AA]">{observation.is_demo ? "DSS" : "SPHEREx"}</span>
-                        {isSelected && <Check aria-label="Selected" className="h-3.5 w-3.5 text-amber-700 dark:text-amber-300" />}
+                        {isSelected && <Check aria-label="Selected" className="h-3.5 w-3.5 text-sky-700 dark:text-sky-300" />}
                       </span>
                     </button>
                   );
@@ -546,7 +546,7 @@ function CompareContent() {
           <button
             onClick={() => updateSelection(obsIdB, obsIdA)}
             disabled={!obsIdA || !obsIdB || isLoading}
-            className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#F7F7F5] dark:bg-[#161820] border border-[#E7E7E4] dark:border-[#343741] text-[#111111] dark:text-[#F3F4F6] hover:border-amber-500 text-xs font-mono-sci rounded-sm transition-colors self-start sm:self-auto disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 border border-[#E2EAF3] bg-white px-3 py-2 text-xs font-mono-sci text-[#111111] transition-colors hover:border-sky-400 dark:border-[#343741] dark:bg-[#161820] dark:text-[#F3F4F6] self-start sm:self-auto disabled:cursor-not-allowed disabled:opacity-50"
             title="Swap Observation A and Observation B"
           >
             <ArrowLeftRight className="w-3.5 h-3.5" />
@@ -555,7 +555,7 @@ function CompareContent() {
         </div>
 
         <div className="grid w-full min-w-0 grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
-          <div className="min-w-0 rounded-sm border border-amber-200 bg-amber-50/50 p-3 sm:p-4 dark:border-amber-900/50 dark:bg-amber-950/10">
+          <div className="min-w-0 rounded-sm border border-[#E2EAF3] bg-white p-3 sm:p-4 dark:border-sky-900/50 dark:bg-[#12141A]">
             <ObservationPicker
               side="A"
               selected={obsA}
@@ -567,13 +567,13 @@ function CompareContent() {
               onSelect={(id) => updateSelection(id, obsIdB)}
               onSearchArchive={searchNASAArchiveForCompare}
             />
-            {obsA && <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 border-t border-amber-200/80 pt-2.5 font-mono-sci text-[10px] dark:border-amber-900/40">
+            {obsA && <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 border-t border-[#E6EDF4] pt-2.5 font-mono-sci text-[10px] dark:border-sky-900/40">
               <span className="text-[#8A8A83]">Coordinates</span><span className="truncate text-right text-[#444444] dark:text-[#D1D5DB]">{obsA.ra.toFixed(4)}°, {obsA.dec.toFixed(4)}°</span>
               <span className="text-[#8A8A83]">Instrument</span><span className="truncate text-right text-[#444444] dark:text-[#D1D5DB]">{obsA.instrument}</span>
             </div>}
           </div>
 
-          <div className="min-w-0 rounded-sm border border-orange-200 bg-orange-50/50 p-3 sm:p-4 dark:border-orange-900/50 dark:bg-orange-950/10">
+          <div className="min-w-0 rounded-sm border border-[#E2EAF3] bg-white p-3 sm:p-4 dark:border-sky-900/50 dark:bg-[#12141A]">
             <ObservationPicker
               side="B"
               selected={obsB}
@@ -585,7 +585,7 @@ function CompareContent() {
               onSelect={(id) => updateSelection(obsIdA, id)}
               onSearchArchive={searchNASAArchiveForCompare}
             />
-            {obsB && <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 border-t border-orange-200/80 pt-2.5 font-mono-sci text-[10px] dark:border-orange-900/40">
+            {obsB && <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 border-t border-[#E6EDF4] pt-2.5 font-mono-sci text-[10px] dark:border-sky-900/40">
               <span className="text-[#8A8A83]">Coordinates</span><span className="truncate text-right text-[#444444] dark:text-[#D1D5DB]">{obsB.ra.toFixed(4)}°, {obsB.dec.toFixed(4)}°</span>
               <span className="text-[#8A8A83]">Instrument</span><span className="truncate text-right text-[#444444] dark:text-[#D1D5DB]">{obsB.instrument}</span>
             </div>}
