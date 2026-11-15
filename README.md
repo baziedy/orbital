@@ -152,6 +152,22 @@ Orbital/
 
 ---
 
+### Deploy on Vercel
+
+The repository includes a root `vercel.json` with separate `frontend` (Next.js) and
+`backend` (FastAPI) services. Import this repository into Vercel with the repository
+root as the project root. The public domain routes `/api/*` to FastAPI and all other
+paths to Next.js. The frontend's `BACKEND_URL` is supplied automatically by its
+service binding; do not add that variable manually. For local Vercel service routing,
+run `vercel dev --local` from the repository root.
+
+The backend stores disposable FITS and preview caches under `/tmp/orbital-cache` on
+Vercel. Vercel function temporary storage can be cleared between instances, so cache
+contents and search-result records are not durable across cold starts. Use a persistent
+storage service if durable cross-instance search results are required.
+
+---
+
 ### Step 1: Backend Setup (FastAPI & Astropy)
 
 1. Open a terminal in the project directory and create a virtual environment:

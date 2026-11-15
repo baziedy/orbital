@@ -52,3 +52,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+.vercel
+_uv/
+backend/_uv/

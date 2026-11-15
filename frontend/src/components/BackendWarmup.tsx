@@ -9,11 +9,10 @@ export default function BackendWarmup() {
 
   useEffect(() => {
     let active = true;
-    const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 6000);
 
-    fetch(`${backendUrl}/api/health`, { cache: "no-store", signal: controller.signal })
+    fetch("/api/health", { cache: "no-store", signal: controller.signal })
       .then((res) => {
         clearTimeout(timer);
         if (!active) return;
@@ -41,11 +40,10 @@ export default function BackendWarmup() {
 
   const handleRetry = () => {
     setStatus("connecting");
-    const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 6000);
 
-    fetch(`${backendUrl}/api/health`, { cache: "no-store", signal: controller.signal })
+    fetch("/api/health", { cache: "no-store", signal: controller.signal })
       .then((res) => {
         clearTimeout(timer);
         if (res.ok) {

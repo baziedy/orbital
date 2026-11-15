@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const backendUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
+const localBackendUrl = (process.env.ORBITAL_LOCAL_BACKEND_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
 
 const nextConfig = {
   reactStrictMode: true,
@@ -20,10 +20,14 @@ const nextConfig = {
     ],
   },
   async rewrites() {
+    // In a Vercel services deployment, the root vercel.json owns /api routing.
+    // Keep this local proxy only for running `next dev` without `vercel dev`.
+    if (process.env.VERCEL === "1") return [];
+
     return [
       {
         source: '/api/:path*',
-        destination: `${backendUrl}/api/:path*`,
+        destination: `${localBackendUrl}/api/:path*`,
       },
     ];
   },

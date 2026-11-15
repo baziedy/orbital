@@ -13,9 +13,10 @@ from app.services.comparison_engine import analyze_observation_pair
 
 router = APIRouter(prefix="/api", tags=["images"])
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-TARGET_PREVIEW_DIR = PROJECT_ROOT / "frontend" / "public" / "targets"
-TARGET_CURATED_DIR = PROJECT_ROOT / "frontend" / "public" / "curated"
+BACKEND_ROOT = Path(__file__).resolve().parents[2]
+ASSET_DIR = BACKEND_ROOT / "assets"
+TARGET_PREVIEW_DIR = ASSET_DIR / "targets"
+TARGET_CURATED_DIR = ASSET_DIR / "curated"
 CURATED_ARCHIVE_PREVIEWS = {
     "DSS-REF-W0855-P1": TARGET_PREVIEW_DIR / "wise0855_epoch1.png",
     "DSS-REF-W0855-P2": TARGET_PREVIEW_DIR / "wise0855_epoch2.png",
@@ -68,9 +69,9 @@ def _find_image_file_for_obs(obs_id: str) -> Optional[Path]:
             if target_id in CURATED_ARCHIVE_PREVIEWS and CURATED_ARCHIVE_PREVIEWS[target_id].exists():
                 return CURATED_ARCHIVE_PREVIEWS[target_id]
 
-        frontend_path = Path("frontend/public") / rel_path
-        if frontend_path.exists():
-            return frontend_path
+        bundled_asset = ASSET_DIR / rel_path
+        if bundled_asset.exists():
+            return bundled_asset
 
         file_name = Path(obs.preview_url).name
         cache_named = settings.cache_previews_dir / file_name

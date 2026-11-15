@@ -18,7 +18,7 @@ import {
   Pause,
   Radio
 } from "lucide-react";
-import { fetchTargets, fetchObservations } from "@/lib/api";
+import { fetchTargets, fetchObservations, refreshImageUrl } from "@/lib/api";
 import { TargetInfo, ObservationRecord } from "@/types";
 
 const INITIAL_TARGETS: TargetInfo[] = [
@@ -392,9 +392,8 @@ export default function LandingPage() {
   const currentHeroTarget = HERO_CONSOLE_TARGETS[selectedHeroIndex];
   const currentPasses = consoleObs[selectedHeroIndex] ?? [];
   const activeObs = currentPasses[activePassIndex] ?? null;
-  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
   const activeImageSrc = activeObs
-    ? `${BACKEND_URL}/api/images/${activeObs.observation_id}`
+    ? refreshImageUrl(`/api/images/${encodeURIComponent(activeObs.observation_id)}`)
     : null;
 
   const scientificPillars = [

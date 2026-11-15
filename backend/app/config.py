@@ -1,8 +1,10 @@
 from pathlib import Path
+import os
 from pydantic_settings import BaseSettings
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-CACHE_DIR = BASE_DIR / "cache"
+DEFAULT_CACHE_DIR = Path("/tmp/orbital-cache") if os.getenv("VERCEL") == "1" else BASE_DIR / "cache"
+CACHE_DIR = Path(os.getenv("ORBITAL_CACHE_DIR", str(DEFAULT_CACHE_DIR)))
 CACHE_FITS_DIR = CACHE_DIR / "fits"
 CACHE_PREVIEWS_DIR = CACHE_DIR / "previews"
 

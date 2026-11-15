@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Download, CheckCircle } from "lucide-react";
-import { fetchObservation, refreshImageUrl } from "@/lib/api";
+import { refreshImageUrl } from "@/lib/api";
+import { fetchServerObservation } from "@/lib/server-api";
 import SpectralInspector from "@/components/SpectralInspector";
 
 interface PageProps {
@@ -12,7 +13,7 @@ export default async function ObservationDetailPage({ params }: PageProps) {
   const { id } = await params;
   let observation;
   try {
-    observation = await fetchObservation(id);
+    observation = await fetchServerObservation(id);
   } catch {
     notFound();
   }
